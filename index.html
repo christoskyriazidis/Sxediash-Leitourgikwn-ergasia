@@ -9,12 +9,20 @@
   <body>
     <div class="main">
       <div class="top">
+        <h1 class="header">ROUND ROBIN</h1>
         <div>
           <table id="selectProcesses">
             <tr>
               <th>Name</th>
               <th>BurstTime</th>
               <th>ArrivalTime</th>
+              <th>
+                <input
+                  style="display: table-cell"
+                  type="text"
+                  placeholder="Quantum"
+                />
+              </th>
             </tr>
             <tr>
               <td><input type="text" /></td>
@@ -29,6 +37,7 @@
           </table>
           <div class="add-btn-div">
             <button id="add-process">add process</button>
+            <button id="calculate-process">ShowMeResults</button>
           </div>
         </div>
       </div>

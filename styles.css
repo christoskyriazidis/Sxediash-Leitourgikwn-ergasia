@@ -14,6 +14,7 @@
   display: flex;
   background-color: lightblue;
   overflow: auto;
+  flex-direction: column;
 }
 .bottom {
   display: flex;
@@ -27,7 +28,9 @@
 }
 .add-btn-div {
   display: flex;
-  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
+  width: 100%;
 }
 #add-process {
   cursor: pointer;
@@ -35,14 +38,29 @@
   padding: 5px;
   border: none;
   background-color: greenyellow;
+  margin: 2px;
+}
+#calculate-process {
+  cursor: pointer;
+  border-radius: 10%;
+  padding: 5px;
+  border: none;
+  background-color: rgb(255 0 0);
+  margin: 2px;
 }
 #add-process:hover {
   padding: 10px;
 }
+#calculate-process:hover {
+  padding: 10px;
+}
 #processes td {
-    text-align: center;
-    vertical-align: middle;
+  text-align: center;
+  vertical-align: middle;
 }
 #processes th {
-    padding: 5px;
+  padding: 5px;
+}
+.header {
+ margin-bottom: 50px; 
 }

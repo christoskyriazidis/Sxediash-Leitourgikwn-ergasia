@@ -97,6 +97,8 @@ function roundRobin(queue, quantum) {
 const table = document.querySelector("#processes");
 //gemizoume dunamika to table
 function fillTable() {
+  let AVGresponseTime = 0;
+  let AVGturnAroundTime = 0;
   for (i of done) {
     let row = document.createElement("tr");
     for (j in i) {
