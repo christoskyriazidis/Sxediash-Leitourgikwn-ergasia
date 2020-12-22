@@ -19,27 +19,41 @@ class Process {
     this.turnAroundTime = turnAroundTime;
   }
 }
-const processes = [];
-processes.push(new Process("A", 0, 3, 1));
-processes.push(new Process("B", 2, 6, 2));
-processes.push(new Process("C", 4, 4, 4));
-processes.push(new Process("D", 6, 5, 5));
-processes.push(new Process("E", 8, 2, 6));
-
+let processes = [];
 let time = 0;
-const requestQueue = [];
+let requestQueue = [];
 let chillQueue = [];
-const done = [];
+let done = [];
 let kme = "";
-const kmeArray = [];
-let quantum = parseInt(document.getElementById("quantum").value);
-
+let kmeArray = [];
 const calcuLateBtn = document.querySelector("#calculate-process");
 calcuLateBtn.addEventListener("click", calculate_and_show);
 
 function calculate_and_show() {
+  cleanResults();
   create_Process_objects();
-  roundRobin(processes, 1);
+  //prwta round robin kai meta
+  //dinamika mpainei to quantum
+  roundRobin(processes, parseInt(document.getElementById("quantum").value));
+  fillTable();
+  showSteps();
+}
+
+//Ka8e fora p pataei showMeResults "ka8arizei" olous tous pinakes gia na ksana kanei calculate to RoundRobin
+function cleanResults() {
+  stepsuL.innerHTML = "";
+  table.innerHTML = ` <tr>
+  <th>Process</th>
+  <th>arrivalTime</th>
+  <th>TimeStarted</th>
+  <th>TimeCompleted</th>
+  <th>ResponseTime</th>
+  <th>TaTime</th>
+</tr>`;
+  done = [];
+  time = 0;
+  kmeArray = [];
+  processes = [];
 }
 
 function roundRobin(queue, quantum) {
@@ -101,10 +115,9 @@ function roundRobin(queue, quantum) {
     }
     if (time > 10000) {
       alert("something went wrong time 10000 (apeiro loop )");
-      return;
+      break;
     }
   }
-  fillTable();
 }
 
 const table = document.querySelector("#processes");
@@ -160,4 +173,16 @@ function create_Process_objects() {
       new Process(name, parseInt(arrivalTime), parseInt(burstTime), 1)
     );
   }
+}
+
+const stepsuL = document.querySelector("#steps");
+//kanei print se mia "lista" tn seira pou ektelestikan oi diergasies
+function showSteps() {
+  // stepsuL.innerHTML+=`<tr><th>${"ID"}</th><th>${"Time"}</th></tr>`
+  let li = "<li>Steps:  ";
+  for (i = 0; i < kmeArray.length; i++) {
+    li += ` ${kmeArray[i].id} `;
+  }
+  li += `  </li>`;
+  stepsuL.innerHTML = li;
 }

@@ -6,9 +6,8 @@
   font-family: sans-serif;
 }
 .top {
-  height: 40%;
+  height: 50%;
   width: 100%;
-  /* display: flex; */
   align-items: center;
   justify-content: center;
   display: flex;
@@ -16,14 +15,16 @@
   flex-direction: column;
 }
 .bottom {
-  height: 60%;
+  height: 50%;
   width: 100%;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 
 .main {
-  height: 90vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
 }
@@ -80,4 +81,16 @@ nav ul li {
 nav ul li a {
   text-decoration: none;
   color: black;
+}
+footer {
+  height: 10vh;
+  background-color: lightblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#steps li{
+  list-style: none;
+  font-size: 20px;
 }
