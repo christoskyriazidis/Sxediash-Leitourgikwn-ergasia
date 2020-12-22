@@ -105,7 +105,7 @@ function fillTable() {
       let td = document.createElement("td");
       // den vazw mesa to BurstTime(giati to midenizo otan einai done h diergasia) kai to Priority
       if (j != "BurstTime" && j != "priority") {
-        console.log(j);
+        // console.log(j);
         td.innerHTML = i[j];
         row.appendChild(td);
       }
