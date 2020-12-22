@@ -20,18 +20,26 @@ class Process {
   }
 }
 const processes = [];
-processes.push(new Process("A", 0, 3, 1));
-processes.push(new Process("B", 2, 6, 2));
-processes.push(new Process("C", 4, 4, 4));
-processes.push(new Process("D", 6, 5, 5));
-processes.push(new Process("E", 8, 2, 6));
+// processes.push(new Process("A", 0, 5, 1));
+// processes.push(new Process("B", 1, 3, 2));
+// processes.push(new Process("C", 3, 6, 4));
+// processes.push(new Process("D", 5, 1, 5));
+// processes.push(new Process("E", 6, 4, 6));
 
-let quantum = parseInt(1);
 let time = 0;
 const requestQueue = [];
 let chillQueue = [];
 const done = [];
 let kme = "";
+let quantum = parseInt(document.getElementById("quantum").value);
+
+const calcuLateBtn = document.querySelector("#calculate-process");
+calcuLateBtn.addEventListener("click", calculate_and_show);
+
+function calculate_and_show() {
+  create_Process_objects();
+  roundRobin(processes, 1);
+}
 
 function roundRobin(queue, quantum) {
   let finish = false;
@@ -95,7 +103,7 @@ function roundRobin(queue, quantum) {
 }
 
 const table = document.querySelector("#processes");
-//gemizoume dunamika to table
+//gemizoume dunamika to table me ta apotelesmata apo to roundRobin
 function fillTable() {
   let AVGresponseTime = 0;
   let AVGturnAroundTime = 0;
@@ -120,7 +128,6 @@ document.querySelector("#add-process").addEventListener("click", add);
 
 //otan patame to add kanei append ena row gia mia kainourgia diergasia
 function add() {
-  const processes = document.querySelector("#selectProcesses");
   let tr = document.createElement("tr");
   let td1 = document.createElement("td");
   let td2 = document.createElement("td");
@@ -131,5 +138,21 @@ function add() {
   tr.appendChild(td1);
   tr.appendChild(td2);
   tr.appendChild(td3);
-  processes.appendChild(tr);
+  processesHtml.appendChild(tr);
+}
+//to table pou 8a paroume tis values gia tis diergasies
+const processesHtml = document.querySelector("#selectProcesses");
+function create_Process_objects() {
+  for (i = 1; i < processesHtml.rows.length; i++) {
+    // console.log(processesHtml.rows[i].cells[0]);
+    //pernw ola ta values apo ta procceses
+    let name = processesHtml.rows[i].cells[0].querySelector("input").value;
+    let burstTime = processesHtml.rows[i].cells[1].querySelector("input").value;
+    let arrivalTime = processesHtml.rows[i].cells[2].querySelector("input")
+      .value;
+    //me ta values ftiaxnw antikeimena Process kai ta vazw stn pinaka
+    processes.push(
+      new Process(name, parseInt(arrivalTime), parseInt(burstTime), 1)
+    );
+  }
 }
