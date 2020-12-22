@@ -132,6 +132,7 @@ function roundRobin(queue, quantum) {
 }
 
 const table = document.querySelector("#processes");
+const AVGtimes=document.querySelector('#AVGtimes');
 //gemizoume dunamika to table me ta apotelesmata apo to roundRobin
 function fillTable() {
   let AVGresponseTime = 0;
@@ -142,15 +143,25 @@ function fillTable() {
       let td = document.createElement("td");
       // den vazw mesa to BurstTime(giati to midenizo otan einai done h diergasia) kai to Priority
       if (j != "BurstTime" && j != "priority") {
-        // console.log(j);
+        // kanw print ola ta pedia tou antikeimenou me
         td.innerHTML = i[j];
         row.appendChild(td);
+      }
+      if (j == "responseTime") {
+        AVGresponseTime += i[j];
+      }
+      if (j == "turnAroundTime") {
+        AVGturnAroundTime += i[j];
       }
       // td.innerHTML=
       // console.log(i[j]);
     }
+
     table.appendChild(row);
   }
+  //kai sto telos kanoume print ta AVG waiting/response Times (diairoume me to length tn diergasiwn...)
+  AVGtimes.innerHTML += `<li>AVG turnAroundTime  ${AVGturnAroundTime / done.length} </li>`;
+  AVGtimes.innerHTML+=`<li>AVG responseTime  ${AVGresponseTime / done.length}</li>`
 }
 
 document.querySelector("#add-process").addEventListener("click", add);
