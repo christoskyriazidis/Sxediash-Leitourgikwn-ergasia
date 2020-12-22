@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>PriorityQueues</title>
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
@@ -13,7 +13,7 @@
           <a href="./roundRobin.html">RoundRobin</a>
         </li>
         <li>
-          <a href="./Queues.html">Queues</a>
+          <a id="activePage" href="./PriorityQueues.html">PriorityQueues</a>
         </li>
       <li>
         <a href="#">Other</a>
@@ -29,6 +29,7 @@
               <th>Name</th>
               <th>BurstTime</th>
               <th>ArrivalTime</th>
+              <th>Priority</th>
               <th>
                 <input
                   id="quantum"
@@ -43,16 +44,19 @@
               <td><input type="text" /></td>
               <td><input type="number" /></td>
               <td><input type="number" /></td>
+              <td><input type="number" /></td>
             </tr>
             <tr>
               <td><input type="text" /></td>
               <td><input type="number" /></td>
               <td><input type="number" /></td>
+              <td><input type="number" /></td>
             </tr>
+            
           </table>
           <div class="add-btn-div">
             <button id="add-process">add process</button>
-            <button id="">Reset</button>
+            <button id="remove-process">RemoveLast</button>
             <button id="calculate-process">ShowMeResults</button>
           </div>
         </div>
@@ -71,6 +75,10 @@
        
       </div>
     </div>
-    <script src="index.js"></script>
+    <script src="./js/priorityQueues.js"></script>
+    <footer>
+      <h1>Chris Kyriazidis 2020&copy </h1>
+      <a href="#">View this code <img width="40px" src="./styles/GitHub-logo.png"   alt=""> </a>
+    </footer>
   </body>
 </html>

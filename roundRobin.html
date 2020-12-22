@@ -3,23 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>RoundRobin</title>
     <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="styles/roundRobin.css" />
   </head>
   <body>
     <nav>
       <ul>
-        <ul>
-          <li>
-            <a href="./roundRobin.html">RoundRobin</a>
-          </li>
-          <li>
-            <a href="./Queues.html">Queues</a>
-          </li>
         <li>
-          <a href="#">Other</a>
+          <a id="activePage" href="./roundRobin.html">RoundRobin</a>
         </li>
-        </ul>
+        <li>
+          <a href="./PriorityQueues.html">PriorityQueues</a>
+        </li>
+        <li>
+          <a href="#">Test</a>
+        </li>
+      </ul>
     </nav>
     <div class="main">
       <div class="top">
@@ -68,7 +68,7 @@
           </table>
           <div class="add-btn-div">
             <button id="add-process">add process</button>
-            <button id="">Reset</button>
+            <button id="remove-process">RemoveLast</button>
             <button id="calculate-process">ShowMeResults</button>
           </div>
         </div>
@@ -84,15 +84,17 @@
             <th>TaTime</th>
           </tr>
         </table>
-        
-        <ul id="steps">
-          </ul>
+
+        <ul id="steps"></ul>
       </div>
     </div>
     <footer>
-      <h1>Chris Kyriazidis 2020&copy </h1>
-      <a href="#">View this code <img width="40px" src="./styles/GitHub-logo.png"   alt=""> </a>
+      <h1>Chris Kyriazidis 2020&copy</h1>
+      <a href="#"
+        >View this code
+        <img width="40px" src="./styles/GitHub-logo.png" alt="" />
+      </a>
     </footer>
-    <script src="roundRobin.js"></script>
+    <script src="./js/roundRobin.js"></script>
   </body>
 </html>
