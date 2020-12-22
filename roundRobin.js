@@ -20,17 +20,18 @@ class Process {
   }
 }
 const processes = [];
-// processes.push(new Process("A", 0, 5, 1));
-// processes.push(new Process("B", 1, 3, 2));
-// processes.push(new Process("C", 3, 6, 4));
-// processes.push(new Process("D", 5, 1, 5));
-// processes.push(new Process("E", 6, 4, 6));
+processes.push(new Process("A", 0, 3, 1));
+processes.push(new Process("B", 2, 6, 2));
+processes.push(new Process("C", 4, 4, 4));
+processes.push(new Process("D", 6, 5, 5));
+processes.push(new Process("E", 8, 2, 6));
 
 let time = 0;
 const requestQueue = [];
 let chillQueue = [];
 const done = [];
 let kme = "";
+const kmeArray = [];
 let quantum = parseInt(document.getElementById("quantum").value);
 
 const calcuLateBtn = document.querySelector("#calculate-process");
@@ -64,7 +65,7 @@ function roundRobin(queue, quantum) {
     chillQueue = [];
     if (requestQueue.length != 0) {
       kme = requestQueue.shift();
-      console.log(kme);
+      kmeArray.push(kme);
       if (kme.timeStarted == null) {
         kme.timeStarted = time;
       }
@@ -97,6 +98,10 @@ function roundRobin(queue, quantum) {
     }
     if (timeTick) {
       time++;
+    }
+    if (time > 10000) {
+      alert("something went wrong time 10000 (apeiro loop )");
+      return;
     }
   }
   fillTable();

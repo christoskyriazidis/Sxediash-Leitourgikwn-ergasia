@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li>
+          <a href="./roundRobin.html">RoundRobin</a>
+        </li>
+        <li>
+          <a href="./Queues.html">Queues</a>
+        </li>
+      <li>
+        <a href="#">Other</a>
+      </li>
+      </ul>
+    </nav>
+    <div class="main">
+      <div class="top">
+        <h1 class="header">QUEUES</h1>
+        <div>
+          <table id="selectProcesses">
+            <tr>
+              <th>Name</th>
+              <th>BurstTime</th>
+              <th>ArrivalTime</th>
+              <th>
+                <input
+                  id="quantum"
+                  style="display: table-cell"
+                  type="text"
+                  placeholder="Quantum"
+                  value="1"
+                />
+              </th>
+            </tr>
+            <tr>
+              <td><input type="text" /></td>
+              <td><input type="number" /></td>
+              <td><input type="number" /></td>
+            </tr>
+            <tr>
+              <td><input type="text" /></td>
+              <td><input type="number" /></td>
+              <td><input type="number" /></td>
+            </tr>
+          </table>
+          <div class="add-btn-div">
+            <button id="add-process">add process</button>
+            <button id="">Reset</button>
+            <button id="calculate-process">ShowMeResults</button>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <table id="processes">
+          <tr>
+            <th>Process</th>
+            <th>arrivalTime</th>
+            <th>TimeStarted</th>
+            <th>TimeCompleted</th>
+            <th>ResponseTime</th>
+            <th>TaTime</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
