@@ -27,8 +27,15 @@ let done = [];
 let kme = "";
 let kmeArray = [];
 const calcuLateBtn = document.querySelector("#calculate-process");
+const remove_process_btn = document.querySelector("#remove-process");
 calcuLateBtn.addEventListener("click", calculate_and_show);
 
+remove_process_btn.addEventListener("click", removeLastProcess);
+
+function removeLastProcess(){
+  let rowCount=processesHtml.rows.length
+  processesHtml.deleteRow(rowCount-1)
+}
 function calculate_and_show() {
   cleanResults();
   create_Process_objects();
@@ -50,6 +57,7 @@ function cleanResults() {
   <th>ResponseTime</th>
   <th>TaTime</th>
 </tr>`;
+  AVGtimes.innerHTML = "";
   done = [];
   time = 0;
   kmeArray = [];
@@ -132,7 +140,7 @@ function roundRobin(queue, quantum) {
 }
 
 const table = document.querySelector("#processes");
-const AVGtimes=document.querySelector('#AVGtimes');
+const AVGtimes = document.querySelector("#AVGtimes");
 //gemizoume dunamika to table me ta apotelesmata apo to roundRobin
 function fillTable() {
   let AVGresponseTime = 0;
@@ -160,8 +168,12 @@ function fillTable() {
     table.appendChild(row);
   }
   //kai sto telos kanoume print ta AVG waiting/response Times (diairoume me to length tn diergasiwn...)
-  AVGtimes.innerHTML += `<li>AVG turnAroundTime  ${AVGturnAroundTime / done.length} </li>`;
-  AVGtimes.innerHTML+=`<li>AVG responseTime  ${AVGresponseTime / done.length}</li>`
+  AVGtimes.innerHTML += `<li>AVG turnAroundTime  ${
+    AVGturnAroundTime / done.length
+  } </li>`;
+  AVGtimes.innerHTML += `<li>AVG responseTime  ${
+    AVGresponseTime / done.length
+  }</li>`;
 }
 
 document.querySelector("#add-process").addEventListener("click", add);
