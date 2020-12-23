@@ -32,9 +32,9 @@ calcuLateBtn.addEventListener("click", calculate_and_show);
 
 remove_process_btn.addEventListener("click", removeLastProcess);
 
-function removeLastProcess(){
-  let rowCount=processesHtml.rows.length
-  processesHtml.deleteRow(rowCount-1)
+function removeLastProcess() {
+  let rowCount = processesHtml.rows.length;
+  processesHtml.deleteRow(rowCount - 1);
 }
 function calculate_and_show() {
   cleanResults();
