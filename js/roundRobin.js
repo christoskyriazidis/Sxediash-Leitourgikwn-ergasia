@@ -69,6 +69,7 @@ function roundRobin(queue, quantum) {
   //KRATAW tis arxikes times quantum/diergasiwn
   let firstQuantum = quantum;
   let firstSize = queue.length;
+  if (queue.length <= 2) return;
   while (!finish) {
     //koitame an uparxoun diergasies oi opoies dn exoun ftasei.
     if (queue.length > 0) {
@@ -202,10 +203,12 @@ function create_Process_objects() {
     let burstTime = processesHtml.rows[i].cells[1].querySelector("input").value;
     let arrivalTime = processesHtml.rows[i].cells[2].querySelector("input")
       .value;
-    //me ta values ftiaxnw antikeimena Process kai ta vazw stn pinaka
-    processes.push(
-      new Process(name, parseInt(arrivalTime), parseInt(burstTime), 1)
-    );
+    if (name != "" && burstTime != "" && arrivalTime != "") {
+      //me ta values ftiaxnw antikeimena Process kai ta vazw stn pinaka
+      processes.push(
+        new Process(name, parseInt(arrivalTime), parseInt(burstTime), 1)
+      );
+    }
   }
 }
 
