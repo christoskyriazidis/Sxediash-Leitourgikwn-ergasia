@@ -157,17 +157,24 @@ function priorityQueue(processes, quantum) {
     }
 
     if (queues[0].length > 0) {
+      
     } else if (queues[1].length > 0) {
+
     } else if (queues[2].length > 0) {
+
     } else if (queues[3].length > 0) {
+
     } else if (queues[4].length > 0) {
+
     } else if (queues[5].length > 0) {
+
     } else if (queues[6].length > 0) {
+
     }
 
     time++;
 
-    if (time == 200) {
+    if (time == 300) {
       return;
     }
   }
