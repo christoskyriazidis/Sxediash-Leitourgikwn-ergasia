@@ -21,6 +21,7 @@ class Process {
 }
 let processes = [];
 let time = 0;
+let loopTime = 0;
 let requestQueue = [];
 let chillQueue = [];
 let done = [];
@@ -131,9 +132,10 @@ function roundRobin(queue, quantum) {
     if (done.length == firstSize) {
       break;
     }
+    loopTime++;
     //kapoies fores kanei infinity loop... kai an kseperasi to 10.000 time stn ousia petaei error oti kati egine la8os...
     //kai den kolaei kai o browser opws otan ginete apiro loop..
-    if (time > 10000) {
+    if (loopTime > 10000) {
       alert("something went wrong time 10000 (apeiro loop )");
       break;
     }

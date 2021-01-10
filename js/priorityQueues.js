@@ -21,22 +21,21 @@ class Process {
 }
 
 let processes = [];
-processes.push(new Process("A", 0, 3, 1));
-processes.push(new Process("B", 2, 6, 1));
-processes.push(new Process("C", 4, 4, 1));
-processes.push(new Process("D", 6, 5, 1));
-processes.push(new Process("E", 8, 2, 1));
-
+// processes.push(new Process("A", 0, 3, 1));
+// processes.push(new Process("B", 2, 6, 4));
+// processes.push(new Process("C", 4, 4, 1));
+// processes.push(new Process("D", 6, 5, 2));
+// processes.push(new Process("E", 8, 2, 1));
 
 let kme = "";
 let queues = [[], [], [], [], [], [], []];
-//array
+
 let requestQueue = [];
 let chillQueue = [];
 let done = [];
 let kmeArray = [];
 let time = 0;
-
+let loopTime=0;
 function priorityQueue(processes, quantum) {
   let firstQuantum = quantum;
   let firstSize = processes.length;
@@ -77,7 +76,7 @@ function priorityQueue(processes, quantum) {
     }
 
     for (let i of chillQueue) {
-      queues[i.priority ].push(i);
+      queues[i.priority - 1].push(i);
     }
     chillQueue = [];
 
@@ -115,17 +114,17 @@ function priorityQueue(processes, quantum) {
             kme = "";
           }
         }
-      }
+      } 
     }
 
-    // time++;
+    loopTime++;
     if (done.length == firstSize) {
       break;
     }
     //kapoies fores kanei infinity loop... kai an kseperasi to 10.000 time stn ousia petaei error oti kati egine la8os...
     //kai den kolaei kai o browser opws otan ginete apiro loop..
-    if (time > 10000) {
-      alert("something went wrong time 10000 (apeiro loop )");
+    if (loopTime > 1000000) {
+      alert("something went wrong time 1000000 (apeiro loop )");
       break;
     }
   }
@@ -164,8 +163,6 @@ function showSteps() {
   stepsuL.innerHTML = li;
 }
 
-
-
 const table = document.querySelector("#processes");
 const AVGtimes = document.querySelector("#AVGtimes");
 //gemizoume dunamika to table me ta apotelesmata apo to roundRobin
@@ -203,7 +200,6 @@ function fillTable() {
   }</li>`;
 }
 
-
 //Ka8e fora p pataei showMeResults "ka8arizei" olous tous pinakes gia na ksana kanei calculate to RoundRobin
 function cleanResults() {
   stepsuL.innerHTML = "";
@@ -222,8 +218,6 @@ function cleanResults() {
   processes = [];
 }
 
-
-
 const calcuLateBtn = document.querySelector("#calculate-process");
 const remove_process_btn = document.querySelector("#remove-process");
 calcuLateBtn.addEventListener("click", calculate_and_show);
@@ -235,11 +229,39 @@ function removeLastProcess() {
   processesHtml.deleteRow(rowCount - 1);
 }
 function calculate_and_show() {
-  // cleanResults();
-  // create_Process_objects();
+  cleanResults();
+  create_Process_objects();
   //prwta round robin kai meta
   //dinamika mpainei to quantum
-  roundRobin(processes, parseInt(document.getElementById("quantum").value));
+  priorityQueue(processes, parseInt(document.getElementById("quantum").value));
   fillTable();
   showSteps();
+}
+
+//to table pou 8a paroume tis values gia tis diergasies
+function create_Process_objects() {
+  for (i = 1; i < processesHtml.rows.length; i++) {
+    // console.log(processesHtml.rows[i].cells[0]);
+    //pernw ola ta values apo ta procceses
+    let name = processesHtml.rows[i].cells[0].querySelector("input").value;
+    let burstTime = processesHtml.rows[i].cells[1].querySelector("input").value;
+    let arrivalTime = processesHtml.rows[i].cells[2].querySelector("input")
+      .value;
+    let priority = processesHtml.rows[i].cells[3].querySelector("input").value;
+    // an einai falsy 0,null,'' ginete 1 :) 
+    if (!priority) {
+      priority = 1;
+    }
+    if (name != "" && burstTime != "" && arrivalTime != "") {
+      //me ta values ftiaxnw antikeimena Process kai ta vazw stn pinaka
+      processes.push(
+        new Process(
+          name,
+          parseInt(arrivalTime),
+          parseInt(burstTime),
+          parseInt(priority)
+        )
+      );
+    }
+  }
 }
