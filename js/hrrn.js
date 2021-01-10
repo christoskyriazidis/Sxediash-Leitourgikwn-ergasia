@@ -29,10 +29,18 @@ let kme = "";
 let kmeArray = [];
 const calcuLateBtn = document.querySelector("#calculate-process");
 const remove_process_btn = document.querySelector("#remove-process");
+const divisions = document.querySelector("#divisions");
 calcuLateBtn.addEventListener("click", calculate_and_show);
 
 remove_process_btn.addEventListener("click", removeLastProcess);
 
+// processes = [
+//   new Process("A", 0, 3, 1),
+//   new Process("B", 1, 5, 1),
+//   new Process("C", 3, 2, 1),
+//   new Process("D", 9, 5, 1),
+//   new Process("E", 12, 5, 1),
+// ];
 function removeLastProcess() {
   let rowCount = processesHtml.rows.length;
   processesHtml.deleteRow(rowCount - 1);
@@ -42,12 +50,7 @@ function calculate_and_show() {
   create_Process_objects();
   //prwta round robin kai meta
   //dinamika mpainei to quantum
-  let UIquantum = document.getElementById("quantum").value;
-  //an einai "falsy" dhladh 0,null,-1.... tote ginete 1
-  if (!UIquantum || UIquantum == 0) {
-    UIquantum = 1;
-  }
-  roundRobin(processes, UIquantum);
+  HRRN(processes);
   fillTable();
   showSteps();
 }
@@ -56,13 +59,13 @@ function calculate_and_show() {
 function cleanResults() {
   stepsuL.innerHTML = "";
   table.innerHTML = ` <tr>
-  <th>Process</th>
-  <th>arrivalTime</th>
-  <th>TimeStarted</th>
-  <th>TimeCompleted</th>
-  <th>ResponseTime</th>
-  <th>TaTime</th>
-</tr>`;
+    <th>Process</th>
+    <th>arrivalTime</th>
+    <th>TimeStarted</th>
+    <th>TimeCompleted</th>
+    <th>ResponseTime</th>
+    <th>TaTime</th>
+  </tr>`;
   AVGtimes.innerHTML = "";
   done = [];
   time = 0;
@@ -70,10 +73,9 @@ function cleanResults() {
   processes = [];
 }
 
-function roundRobin(queue, quantum) {
+function HRRN(queue) {
   let finish = false;
   //KRATAW tis arxikes times quantum/diergasiwn
-  let firstQuantum = quantum;
   let firstSize = queue.length;
   if (queue.length <= 2) return;
   while (!finish) {
@@ -90,58 +92,79 @@ function roundRobin(queue, quantum) {
         }
       }
     }
-    //profirika kalitera..
-    for (let i of chillQueue) {
-      requestQueue.push(i);
-    }
-    chillQueue = [];
 
     if (requestQueue.length != 0) {
-      //vazoume stn "KME" tin 1 diergasia apo to requestQueue gia ektelesh
-      kme = requestQueue.shift();
-      //se ena voi8iko array vazw tis diergasies pou ektelestikan stn KME gia na tis emfanisw sto UI...
-      kmeArray.push(kme);
-      //an dn exei oristei timeStarted stn diergasia vazei to current Time
-      if (kme.timeStarted == null) {
-        kme.timeStarted = time;
-      }
-      //afairo apo to burstTime,Quantum kai pros8eto sto time
-      kme.BurstTime--;
-      quantum--;
-      time++;
-      //an h diergasia pou vriskete stin KME exei burstTime 0 tote teliose kai tn vazoume sto done
-      if (kme.BurstTime == 0) {
-        //calculations response/turnAround
-        kme.timeCompleted = time;
-        kme.turnAroundTime = time - kme.arrivalTime;
-        kme.responseTime = kme.timeStarted - kme.arrivalTime;
-        done.push(kme);
-        //ka8arizei tn "KME" apo tn diergasia
-        kme = "";
-        //to to BurstTime einai 0 ARA prepei na ksana ginei to quantum oso htan!!!
-        quantum = firstQuantum;
-      } else {
-        //an dn exei teliosei h diergasia kai exei quant=0
-        if (quantum == 0) {
-          //mpainei se ena alo pinaka perimenontas na na parei ksana quant...proforika kalitera..
-          chillQueue.push(kme);
+      //highestResponseRatio evala poli mikro noumero gia sigouria...
+      let hrr = -100;
+      //se poia 8esi tou pinaka einai to max oste na paei sthn KME.
+      let maxPr = -1;
+      //an exoun erthei perissotera apo 1 stoixeia TOTE MONO thaA GINOUN oi diaireseis
+      if (requestQueue.length > 1) {
+        //loop se oles tis diergasies pou exoun ftasei.
+        for (let i = 0; i < requestQueue.length; i++) {
+          //upologizo to Ratio
+          let currentRR =
+            (time - requestQueue[i].arrivalTime + requestQueue[i].BurstTime) /
+            requestQueue[i].BurstTime;
+          //kanw print to Ratio
+          divisions.innerHTML += `<li>Time:${time}  ${requestQueue[i].id} rratio${currentRR}</li>`;
+          //koitaei an to ratio tis diergasies einai maligero apo to "highest ratio"
+          if (currentRR > hrr) {
+            hrr = currentRR;
+            maxPr = i;
+          }
+        }
+        //vazoume stn "KME" tin 1 diergasia apo to requestQueue gia ektelesh
+        kme = requestQueue.splice(maxPr, 1);
+        //se ena voi8iko array vazw tis diergasies pou ektelestikan stn KME gia na tis emfanisw sto UI...
+        kmeArray.push(kme[0]);
+        if (kme[0].timeStarted == null) {
+          kme[0].timeStarted = time;
+        }
+        //prostheto sto TIME olo to burstTime tis diergasies afu einai xwris proekxorisi algorithmos..
+        time += parseInt(kme[0].BurstTime);
+        kme[0].BurstTime = 0;
+        if (kme[0].BurstTime == 0) {
+          //calculations response/turnAround
+          kme[0].timeCompleted = time;
+          kme[0].turnAroundTime = time - kme[0].arrivalTime;
+          kme[0].responseTime = kme[0].timeStarted - kme[0].arrivalTime;
+          done.push(kme[0]);
+          //ka8arizei tn "KME" apo tn diergasia
           kme = "";
-          //afu egine to quant=0 ksana vazw to arxiko
-          quantum = firstQuantum;
-        } else {
-          //an burstTime>0 kai quanta>0 tote ksana PAEI stn 1 8esh tou pinaka requestQueue
-          requestQueue.unshift(kme);
+        }
+      }
+      //edw tha paei an uparxei MONO 1 diergasia stn lista kai dn xroiazete na ginoun oi diaireseis..
+      else {
+        //vazoume stn "KME" tin 1 diergasia apo to requestQueue gia ektelesh
+        kme = requestQueue.shift();
+        //se ena voi8iko array vazw tis diergasies pou ektelestikan stn KME gia na tis emfanisw sto UI...
+        kmeArray.push(kme);
+        console.log(kme);
+        if (kme.timeStarted == null) {
+          kme.timeStarted = time;
+        }
+        time += parseInt(kme.BurstTime);
+        kme.BurstTime = 0;
+        if (kme.BurstTime == 0) {
+          //calculations response/turnAround
+          kme.timeCompleted = time;
+          kme.turnAroundTime = time - kme.arrivalTime;
+          kme.responseTime = kme.timeStarted - kme.arrivalTime;
+          done.push(kme);
+          //ka8arizei tn "KME" apo tn diergasia
           kme = "";
         }
       }
     }
+
     //edw telionei o algori8mos. Otan teliosoun kai oles oi diergasies...
     if (done.length == firstSize) {
       break;
     }
-    loopTime++;
     //kapoies fores kanei infinity loop... kai an kseperasi to 10.000 time stn ousia petaei error oti kati egine la8os...
     //kai den kolaei kai o browser opws otan ginete apiro loop..
+    loopTime++;
     if (loopTime > 10000) {
       alert("something went wrong time 10000 (apeiro loop )");
       break;
@@ -215,6 +238,7 @@ function create_Process_objects() {
     if (name != "" && burstTime != "" && arrivalTime != "") {
       //me ta values ftiaxnw antikeimena Process kai ta vazw stn pinaka
       processes.push(
+        //panta vazoume priority 1...
         new Process(name, parseInt(arrivalTime), parseInt(burstTime), 1)
       );
     }
@@ -227,7 +251,10 @@ function showSteps() {
   // stepsuL.innerHTML+=`<tr><th>${"ID"}</th><th>${"Time"}</th></tr>`
   let li = "<li>Steps:  ";
   for (i = 0; i < kmeArray.length; i++) {
-    li += ` ${kmeArray[i].id} `;
+    //diplh for gia "kalo" print tis KME
+    for (j = 0; j < kmeArray[i].timeCompleted - kmeArray[i].timeStarted; j++) {
+      li += ` ${kmeArray[i].id} `;
+    }
   }
   li += `  </li>`;
   stepsuL.innerHTML = li;

@@ -35,7 +35,7 @@ let chillQueue = [];
 let done = [];
 let kmeArray = [];
 let time = 0;
-let loopTime=0;
+let loopTime = 0;
 function priorityQueue(processes, quantum) {
   let firstQuantum = quantum;
   let firstSize = processes.length;
@@ -71,6 +71,8 @@ function priorityQueue(processes, quantum) {
           }
           //afairo kai to proccess apo tn lista..
           processes.splice(i, 1);
+          //an kanoume pop kati apo ton pinaka prepei na meiosoume kai to i...
+          i--;
         }
       }
     }
@@ -114,7 +116,7 @@ function priorityQueue(processes, quantum) {
             kme = "";
           }
         }
-      } 
+      }
     }
 
     loopTime++;
@@ -128,6 +130,22 @@ function priorityQueue(processes, quantum) {
       break;
     }
   }
+}
+
+//molis patisoume to ShowMeResults kalhte auto to function
+function calculate_and_show() {
+  cleanResults();
+  create_Process_objects();
+  //prwta round robin kai meta
+  //dinamika mpainei to quantum
+  let UIquantum = document.getElementById("quantum").value;
+  //an einai "falsy" dhladh 0,null,-1.... tote ginete 1
+  if (!UIquantum || UIquantum == 0) {
+    UIquantum = 1;
+  }
+  priorityQueue(processes, UIquantum);
+  fillTable();
+  showSteps();
 }
 
 const processesHtml = document.querySelector("#selectProcesses");
@@ -228,15 +246,6 @@ function removeLastProcess() {
   let rowCount = processesHtml.rows.length;
   processesHtml.deleteRow(rowCount - 1);
 }
-function calculate_and_show() {
-  cleanResults();
-  create_Process_objects();
-  //prwta round robin kai meta
-  //dinamika mpainei to quantum
-  priorityQueue(processes, parseInt(document.getElementById("quantum").value));
-  fillTable();
-  showSteps();
-}
 
 //to table pou 8a paroume tis values gia tis diergasies
 function create_Process_objects() {
@@ -248,7 +257,7 @@ function create_Process_objects() {
     let arrivalTime = processesHtml.rows[i].cells[2].querySelector("input")
       .value;
     let priority = processesHtml.rows[i].cells[3].querySelector("input").value;
-    // an einai falsy 0,null,'' ginete 1 :) 
+    // an einai falsy 0,null,'' ginete 1 :)
     if (!priority) {
       priority = 1;
     }
