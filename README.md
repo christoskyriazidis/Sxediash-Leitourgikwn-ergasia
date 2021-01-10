@@ -1,3 +1,3 @@
-# Process scheduling algorithms(Αλγοριθμοι Χρονοδρομολογησησ)!
+# Process scheduling algorithms(Αλγοριθμοι Χρονοδρομολογησης)!
 ## RoundRobin,PriorityQueues
 ### Εργασία Σχεδίαση Λειτουργικών Συστημάτων
