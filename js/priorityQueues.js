@@ -76,11 +76,12 @@ function priorityQueue(processes, quantum) {
         }
       }
     }
-
-    for (let i of chillQueue) {
-      queues[i.priority - 1].push(i);
+    if (chillQueue.length > 0) {
+      for (let i of chillQueue) {
+        queues[i.priority - 1].push(i);
+      }
+      chillQueue = [];
     }
-    chillQueue = [];
 
     for (let i = 0; i < queues.length; i++) {
       if (queues[i].length != 0) {
@@ -192,7 +193,7 @@ function fillTable() {
     for (j in i) {
       let td = document.createElement("td");
       // den vazw mesa to BurstTime(giati to midenizo otan einai done h diergasia) kai to Priority
-      if (j != "BurstTime" && j != "priority") {
+      if (j != "BurstTime") {
         // kanw print ola ta pedia tou antikeimenou me
         td.innerHTML = i[j];
         row.appendChild(td);
@@ -224,6 +225,7 @@ function cleanResults() {
   table.innerHTML = ` <tr>
   <th>Process</th>
   <th>arrivalTime</th>
+  <th>Priority</th>
   <th>TimeStarted</th>
   <th>TimeCompleted</th>
   <th>ResponseTime</th>
