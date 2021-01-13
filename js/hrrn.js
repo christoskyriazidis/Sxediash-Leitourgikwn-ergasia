@@ -107,7 +107,7 @@ function HRRN(queue) {
             (time - requestQueue[i].arrivalTime + requestQueue[i].BurstTime) /
             requestQueue[i].BurstTime;
           //kanw print to Ratio
-          divisions.innerHTML += `<li>Time:${time}  ${requestQueue[i].id} rratio${currentRR}</li>`;
+          divisions.innerHTML += `<li>Time:${time}  ${requestQueue[i].id} rratio: ${currentRR}</li>`;
           //koitaei an to ratio tis diergasies einai maligero apo to "highest ratio"
           if (currentRR > hrr) {
             hrr = currentRR;
