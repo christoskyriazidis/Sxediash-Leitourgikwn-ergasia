@@ -68,6 +68,10 @@ function cleanResults() {
   time = 0;
   kmeArray = [];
   processes = [];
+  requestQueue = [];
+  chillQueue = [];
+  kmeArray = [];
+  loopTime = 0;
 }
 
 function roundRobin(queue, quantum) {
