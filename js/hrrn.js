@@ -66,6 +66,8 @@ function cleanResults() {
     <th>ResponseTime</th>
     <th>TaTime</th>
   </tr>`;
+  //diagrafw tis proigoumenes times apo ta lists twn apotelesmatwn.!
+  divisions.innerHTML = "";
   AVGtimes.innerHTML = "";
   done = [];
   time = 0;
