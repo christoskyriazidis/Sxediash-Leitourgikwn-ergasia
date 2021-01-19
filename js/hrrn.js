@@ -79,6 +79,7 @@ function HRRN(queue) {
   let finish = false;
   //KRATAW tis arxikes times quantum/diergasiwn
   let firstSize = queue.length;
+  time=processes[0].arrivalTime
   if (queue.length <= 2) return;
   while (!finish) {
     //koitame an uparxoun diergasies oi opoies dn exoun ftasei.
